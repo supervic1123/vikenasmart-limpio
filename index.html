@@ -8,11 +8,31 @@
   <link rel="icon" type="image/png"
     href="https://raw.githubusercontent.com/supervic1123/vikenasmart/refs/heads/main/vikenasmart_logo.png" />
   <title>Vikenasmart</title>
-  <!-- Google Fonts: Space Grotesk (Futuristic Headings) & Plus Jakarta Sans (Clean Modern Body) -->
+  <!-- Futuristic & Modern Web Fonts: Ethnocentric, Prime Regular, Orbitron, Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Rajdhani:wght@500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.cdnfonts.com/css/ethnocentric" rel="stylesheet">
+  <link href="https://fonts.cdnfonts.com/css/prime" rel="stylesheet">
   <style>
+    @font-face {
+      font-family: 'Ethnocentric';
+      font-style: normal;
+      font-weight: 400;
+      src: local('Ethnocentric'), local('Ethnocentric Rg'), url('https://fonts.cdnfonts.com/s/6220/ethnocentric%20rg.woff') format('woff');
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Prime';
+      font-style: normal;
+      font-weight: 400;
+      src: local('Prime'), local('Prime Regular'), local('Prime-Regular'), url('https://fonts.cdnfonts.com/s/18542/Prime-Regular.woff') format('woff');
+      font-display: swap;
+    }
+
     :root {
       --primary: #00cfff;
       --secondary: #0066ff;
@@ -21,8 +41,10 @@
       --text-main: #b0c7d6;
       --text-title: #00cfff;
       --footer-bg: rgba(0, 16, 32, 0.92);
-      --font-title: 'Space Grotesk', 'Rajdhani', system-ui, -apple-system, sans-serif;
-      --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      --font-ethnocentric: 'Ethnocentric', 'Ethnocentric Rg', 'Orbitron', sans-serif;
+      --font-prime: 'Prime', 'Prime Regular', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      --font-title: 'Prime', 'Prime Regular', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      --font-body: 'Prime', 'Prime Regular', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
     }
 
     * {
@@ -84,11 +106,12 @@
     }
 
     .navbar-logo span {
-      font-family: var(--font-title);
-      font-size: 1.35rem;
+      font-family: var(--font-ethnocentric);
+      font-size: 1.15rem;
       color: var(--primary);
       font-weight: 700;
-      letter-spacing: 1.2px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
     }
 
     .navbar-menu {
@@ -163,18 +186,24 @@
       filter: drop-shadow(0 0 20px var(--primary));
     }
 
-    h1, h2, h3, h4, h5, h6 {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
       font-family: var(--font-title);
       letter-spacing: 0.5px;
     }
 
     h1 {
-      font-family: var(--font-title);
-      font-size: 2.4rem;
+      font-family: var(--font-ethnocentric);
+      font-size: 2.2rem;
       color: var(--text-title);
-      margin-bottom: 10px;
+      margin-bottom: 12px;
       font-weight: 700;
-      letter-spacing: 1px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
     }
 
     p {
@@ -216,12 +245,12 @@
     }
 
     .section-title {
-      font-family: var(--font-title);
-      font-size: 1.35rem;
+      font-family: var(--font-ethnocentric);
+      font-size: 1.25rem;
       color: var(--primary);
       margin: 24px 0 10px 0;
       font-weight: 700;
-      letter-spacing: 1.2px;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
     }
 
@@ -756,12 +785,12 @@
     }
 
     .modal-header-info h2 {
-      font-family: var(--font-title);
-      font-size: 1.6rem;
+      font-family: var(--font-ethnocentric);
+      font-size: 1.4rem;
       color: var(--primary);
       margin-bottom: 4px;
       font-weight: 700;
-      letter-spacing: 0.5px;
+      letter-spacing: 1px;
     }
 
     .modal-header-info p {
@@ -934,7 +963,8 @@
       <h1>Vikenasmart</h1>
       <p>Desarrollo de software y aplicaciones</p>
       <div style="margin-top: 18px; color: #b0c7d6;">
-        <strong>¡Bienvenido!</strong> Descubre cómo Vikenasmart puede ayudarte a descargar Programas y aplicaciones
+        <strong>¡Bienvenido!</strong> Vikenasmart es una pagina que ofrece descargar Programas, aplicaciones, videos y
+        musica mp3
         gratuitas sin inscripciones ni registros de manera sencilla y eficiente.<br>
         Usa el menú superior para navegar entre programas, aplicaciones, videos, imágenes y música.<br><br>
         <img src="https://hits.sh/supervic1123.github.io/vikenasmart.svg?label=Visitas&color=blue&style=for-the-badge"
@@ -1308,7 +1338,7 @@
         </div>
         <div class="music-info">
           <div class="music-title">Tu eres mi paz</div>
-          <div class="music-subtitle">Archivo MP3 de muestra</div>
+          <div class="music-subtitle">Autor y compositor vikenasmart</div>
         </div>
         <audio controls preload="metadata">
           <!-- Cambia la URL en el atributo src para reproducir tu audio MP3 -->
@@ -1869,13 +1899,14 @@
         desc: "Aplicación para control de encendido y apagado de vehículos y motocicletas desde el celular.",
         downloadUrl: "https://github.com/supervic1123/vikenasmart/raw/refs/heads/main/Keyless.apk",
         downloadText: "Descargar App",
-        fullDesc: "Keyless convierte tu teléfono inteligente en una llave digital inteligente para tu auto o motocicleta. Permite encender, apagar y gestionar el sistema de seguridad y alarmas a distancia con comunicación cifrada.",
+        fullDesc: "Keyless convierte tu teléfono android o iphone en una llave digital inteligente y segura para tu auto o motocicleta. Permite encender y apagar el suiche de tu vehículo con seguridad a distancia con comunicación cifrada por bluetooth.",
         steps: [
-          "Descarga e instala <code>Keyless.apk</code> en tu teléfono móvil Android.",
+          "Descarga e instala Keyless.apk en tu teléfono móvil.",
           "Asegúrate de tener instalado el módulo receptor en tu vehículo o motocicleta.",
           "Activa el Bluetooth de tu teléfono y abre la aplicación Keyless.",
-          "Selecciona tu vehículo para vincular el control remoto.",
-          "Usa los botones en pantalla para encender, apagar o activar la alarma."
+          "Selecciona tu vehículo para vincular con tus credenciales.",
+          "Usa los botones en pantalla para encender o apagar el suche de tu moto o carro.",
+          "Consigue el modulo por medio de los canales de contacto en esta misma pagina web."
         ],
         videos: [],
         images: []
@@ -1886,12 +1917,13 @@
         desc: "Aplicación para gestionar y realizar rifas digitales de 2 y 3 cifras de forma organizada.",
         downloadUrl: "https://github.com/supervic1123/vikenasmart/raw/refs/heads/main/RifaMillonaria.apk",
         downloadText: "Descargar App",
-        fullDesc: "Rifa Millonaria es la herramienta ideal para organizadores de rifas y sorteos digitales. Permite llevar el control completo de boletos vendidos, abonos, números disponibles y clientes de sorteos de 2 y 3 cifras.",
+        fullDesc: "Rifa Millonaria es la herramienta ideal para organizadores de rifas y sorteos digitales. Permite llevar el control completo de boletos vendidos, abonos, números disponibles y clientes de sorteos de 2 y 3 cifras, actualmente solo para android, proximamente para iphone.",
         steps: [
-          "Instala <code>RifaMillonaria.apk</code> en tu teléfono móvil.",
-          "Crea una nueva rifa definiendo el nombre del sorteo, precio de la boleta y fecha de juego.",
-          "Asigna números a tus clientes ingresando su nombre y teléfono.",
-          "Registra los abonos y consulta el estado de la rifa en tiempo real."
+          "Descarga la aplicacion desde la playstore o desde el botón de descarga de esta pagina web.",
+          "Instala Rifa Millonaria en tu teléfono móvil android.",
+          "Crea una nueva rifa definiendo el nombre del sorteo, premio, precio de la boleta y fecha.",
+          "Asigna números a tus clientes ingresando su nombre y teléfono y comparte la boleta al cliente.",
+          "Registra los abonos, pagos pendientes y consulta el estado de la rifa en tiempo real."
         ],
         videos: [],
         images: []
@@ -1904,7 +1936,7 @@
         downloadText: "Descargar App",
         fullDesc: "Siempre Fresco ayuda a hogares y pequeños negocios a evitar el desperdicio de comida. Permite registrar las fechas de vencimiento de alimentos y productos, enviando notificaciones preventivas oportunamente.",
         steps: [
-          "Descarga e instala <code>Siempre Fresco.apk</code>.",
+          "Descarga e instala Siempre Fresco desde la playstore o desde el botón de descarga de esta pagina web.",
           "Agrega un producto ingresando su nombre, categoría y fecha de vencimiento.",
           "Recibe alertas automáticas en tu teléfono días antes de que los alimentos caduquen.",
           "Aprovecha al máximo tu despensa y ahorra dinero evitando pérdidas."
@@ -1920,7 +1952,7 @@
         downloadText: "Descargar App",
         fullDesc: "Televik te ofrece acceso a canales de televisión en vivo con calidad HD directo desde tu computadora con Windows. Interfaz rápida, liviana y fácil de navegar.",
         steps: [
-          "Descarga el instalador <code>TeleVic_Plus_Setup.exe</code>.",
+          "Descarga el instalador TeleVic_Plus_Setup.exe desde el botón de descarga de esta pagina web.",
           "Sigue los pasos de instalación en tu PC con Windows.",
           "Abre la aplicación Televik.",
           "Selecciona tu canal favorito de la lista y disfruta de la señal en directo."
@@ -1936,7 +1968,7 @@
         downloadText: "Descargar App",
         fullDesc: "VikTV+ está diseñada para dispositivos Android y Smart TVs (TV Box). Brinda transmisiones estables en vivo de eventos deportivos, películas, series y canales internacionales.",
         steps: [
-          "Descarga <code>VikTV+.apk</code> en tu teléfono o TV Box Android.",
+          "Descarga VikTV+ desde el boton de descargas de esta pagina web, instalalo en tu teléfono o TV Box Android.",
           "Si la instalación se bloquea, ve a Ajustes > Seguridad y activa 'Fuentes desconocidas'.",
           "Abre la aplicación e ingresa a la guía de canales.",
           "Haz click en el canal deseado para iniciar la reproducción inmediata."
