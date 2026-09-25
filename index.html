@@ -1938,28 +1938,125 @@
         stepsOl.innerHTML = '<li>Información de uso no registrada.</li>';
       }
 
-      // Rellenar Videos
-      const videosGrid = document.getElementById('modalVideosGrid');
-      const videoCountBadge = document.getElementById('modalVideoCount');
-      videosGrid.innerHTML = '';
-      videoCountBadge.textContent = data.videos ? data.videos.length : 0;
+    // Abrir video de modal en overlay de tamaño grande (80%)
+    function openVideoOverlay(videoSrc, videoTitle) {
+      if (document.querySelector('.video-modal-overlay')) return;
 
-      if (data.videos && data.videos.length > 0) {
-        data.videos.forEach(v => {
-          const vBox = document.createElement('div');
-          vBox.className = 'video-container';
-          vBox.innerHTML = `
-            <video controls width="200" style="width: 220px; height: 130px; border-radius: 12px; background: #000;">
-              <source src="${v.src}" type="video/mp4">
-              Tu navegador no soporta video.
-            </video>
-            <div class="video-label" style="font-size:0.85rem; margin-top:6px; color:#00cfff; font-weight:500;">${v.title}</div>
-          `;
-          videosGrid.appendChild(vBox);
-        });
-      } else {
-        videosGrid.innerHTML = '<div class="modal-empty-msg">No hay videos instructivos disponibles para esta aplicación aún.</div>';
+      const overlay = document.createElement('div');
+      overlay.className = 'video-modal-overlay';
+      overlay.style.position = 'fixed';
+      overlay.style.top = '0';
+      overlay.style.left = '0';
+      overlay.style.width = '100vw';
+      overlay.style.height = '100vh';
+      overlay.style.background = 'rgba(0,10,25,0.92)';
+      overlay.style.backdropFilter = 'blur(10px)';
+      overlay.style.zIndex = '3500';
+      overlay.style.display = 'flex';
+      overlay.style.flexDirection = 'column';
+      overlay.style.alignItems = 'center';
+      overlay.style.justifyContent = 'center';
+      overlay.style.padding = '20px';
+
+      const closeBtn = document.createElement('button');
+      closeBtn.innerHTML = '&times;';
+      closeBtn.title = 'Cerrar video';
+      closeBtn.style.position = 'absolute';
+      closeBtn.style.top = '16px';
+      closeBtn.style.right = '20px';
+      closeBtn.style.background = 'rgba(255, 255, 255, 0.15)';
+      closeBtn.style.border = '1px solid rgba(255, 255, 255, 0.3)';
+      closeBtn.style.color = '#fff';
+      closeBtn.style.fontSize = '1.8rem';
+      closeBtn.style.width = '42px';
+      closeBtn.style.height = '42px';
+      closeBtn.style.borderRadius = '50%';
+      closeBtn.style.cursor = 'pointer';
+      closeBtn.style.display = 'flex';
+      closeBtn.style.alignItems = 'center';
+      closeBtn.style.justifyContent = 'center';
+      closeBtn.style.zIndex = '3600';
+
+      const expandedVideo = document.createElement('video');
+      expandedVideo.controls = true;
+      expandedVideo.autoplay = true;
+      expandedVideo.style.width = Math.min(window.innerWidth * 0.8, 900) + 'px';
+      expandedVideo.style.maxHeight = '80vh';
+      expandedVideo.style.borderRadius = '16px';
+      expandedVideo.style.boxShadow = '0 0 48px rgba(0, 207, 255, 0.5)';
+      expandedVideo.style.background = '#000';
+      expandedVideo.src = videoSrc;
+
+      overlay.appendChild(expandedVideo);
+
+      if (videoTitle) {
+        const titleDiv = document.createElement('div');
+        titleDiv.textContent = videoTitle;
+        titleDiv.style.color = '#00cfff';
+        titleDiv.style.fontSize = '1.15rem';
+        titleDiv.style.fontWeight = '600';
+        titleDiv.style.marginTop = '14px';
+        titleDiv.style.textAlign = 'center';
+        overlay.appendChild(titleDiv);
       }
+
+      overlay.appendChild(closeBtn);
+      document.body.appendChild(overlay);
+
+      function closeVideo() {
+        try { expandedVideo.pause(); } catch (e) { }
+        expandedVideo.src = '';
+        if (overlay && overlay.parentNode) overlay.parentNode.removeChild(overlay);
+        window.removeEventListener('keydown', escVideoListener);
+      }
+
+      closeBtn.addEventListener('click', closeVideo);
+      overlay.addEventListener('click', function (e) {
+        if (e.target === overlay) closeVideo();
+      });
+
+      function escVideoListener(e) {
+        if (e.key === 'Escape') closeVideo();
+      }
+      window.addEventListener('keydown', escVideoListener);
+    }
+
+    // Rellenar Videos
+    const videosGrid = document.getElementById('modalVideosGrid');
+    const videoCountBadge = document.getElementById('modalVideoCount');
+    videosGrid.innerHTML = '';
+    videoCountBadge.textContent = data.videos ? data.videos.length : 0;
+
+    if (data.videos && data.videos.length > 0) {
+      data.videos.forEach(v => {
+        const vBox = document.createElement('div');
+        vBox.className = 'video-container';
+        vBox.style.cursor = 'pointer';
+        vBox.style.width = '220px';
+        vBox.style.display = 'flex';
+        vBox.style.flexDirection = 'column';
+        vBox.style.alignItems = 'center';
+        vBox.innerHTML = `
+          <div style="position:relative; width:220px; height:130px; border-radius:12px; overflow:hidden; background:#001020; border:1px solid rgba(0, 207, 255, 0.3); display:flex; align-items:center; justify-content:center; box-shadow:0 4px 16px rgba(0,0,0,0.5); transition:transform 0.2s, box-shadow 0.2s;" class="modal-video-thumb">
+            <video preload="metadata" style="width:100%; height:100%; object-fit:cover; pointer-events:none;">
+              <source src="${v.src}" type="video/mp4">
+            </video>
+            <div style="position:absolute; width:48px; height:48px; border-radius:50%; background:rgba(0, 207, 255, 0.85); display:flex; align-items:center; justify-content:center; box-shadow:0 0 16px rgba(0, 207, 255, 0.8);">
+              <svg viewBox="0 0 24 24" style="width:24px; height:24px; fill:#001020; margin-left:3px;"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+          </div>
+          <div class="video-label" style="font-size:0.85rem; margin-top:8px; color:#00cfff; font-weight:500; text-align:center;">${v.title}</div>
+        `;
+
+        vBox.addEventListener('click', function () {
+          openVideoOverlay(v.src, v.title);
+        });
+
+        videosGrid.appendChild(vBox);
+      });
+    } else {
+      videosGrid.innerHTML = '<div class="modal-empty-msg">No hay videos instructivos disponibles para esta aplicación aún.</div>';
+    }
 
       // Rellenar Imágenes
       const imagesGrid = document.getElementById('modalImagesGrid');
