@@ -513,15 +513,33 @@
       background: rgba(0, 16, 32, 0.6);
       border: 1px solid rgba(0, 207, 255, 0.25);
       border-radius: 16px;
-      padding: 20px 16px;
+      padding: 20px 16px 14px 16px;
       box-shadow: 0 4px 20px rgba(0, 16, 32, 0.8);
       transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+      cursor: pointer;
+      position: relative;
     }
 
     .app-card:hover {
       transform: translateY(-4px);
       box-shadow: 0 0 24px rgba(0, 207, 255, 0.4);
       border-color: rgba(0, 207, 255, 0.6);
+    }
+
+    .app-card-hint {
+      font-size: 0.75rem;
+      color: var(--primary);
+      opacity: 0.8;
+      transition: opacity 0.2s;
+      margin-top: 2px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .app-card:hover .app-card-hint {
+      opacity: 1;
+      text-decoration: underline;
     }
 
     .app-icon {
@@ -584,6 +602,255 @@
       transform: scale(1.04);
       box-shadow: 0 0 16px var(--primary);
     }
+
+    /* MODAL OVERLAY & CONTAINER */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 10, 25, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .modal-container {
+      background: #011628;
+      border: 1px solid rgba(0, 207, 255, 0.4);
+      border-radius: 20px;
+      width: 100%;
+      max-width: 850px;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 0 40px rgba(0, 207, 255, 0.25);
+      position: relative;
+      overflow: hidden;
+      animation: modalSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes modalSlideUp {
+      from {
+        transform: translateY(40px) scale(0.96);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 18px;
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      color: #fff;
+      font-size: 1.6rem;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, color 0.2s;
+      z-index: 10;
+    }
+
+    .modal-close:hover {
+      background: rgba(255, 50, 50, 0.8);
+      color: #fff;
+    }
+
+    .modal-header {
+      padding: 24px 28px 20px 28px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      border-bottom: 1px solid rgba(0, 207, 255, 0.15);
+      background: rgba(0, 20, 40, 0.5);
+      flex-wrap: wrap;
+    }
+
+    .modal-logo-wrapper {
+      width: 72px;
+      height: 72px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #001020, #0066ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 20px rgba(0, 207, 255, 0.3);
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    .modal-logo-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .modal-logo-wrapper svg {
+      width: 40px;
+      height: 40px;
+      fill: var(--primary);
+    }
+
+    .modal-header-info {
+      flex: 1;
+      text-align: left;
+      min-width: 200px;
+    }
+
+    .modal-header-info h2 {
+      font-size: 1.6rem;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+
+    .modal-header-info p {
+      color: var(--text-main);
+      font-size: 0.95rem;
+      margin-bottom: 0;
+      text-align: left;
+    }
+
+    .modal-download-btn {
+      padding: 12px 24px;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .modal-tabs {
+      display: flex;
+      background: rgba(0, 10, 20, 0.6);
+      border-bottom: 1px solid rgba(0, 207, 255, 0.15);
+      padding: 0 20px;
+      gap: 8px;
+      overflow-x: auto;
+    }
+
+    .modal-tab {
+      background: none;
+      border: none;
+      color: var(--text-main);
+      font-size: 0.95rem;
+      font-weight: 500;
+      padding: 14px 20px;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+
+    .modal-tab:hover {
+      color: #fff;
+    }
+
+    .modal-tab.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+      font-weight: 600;
+    }
+
+    .tab-badge {
+      background: rgba(0, 207, 255, 0.2);
+      color: var(--primary);
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+    }
+
+    .modal-body {
+      padding: 24px 28px;
+      overflow-y: auto;
+      flex: 1;
+      text-align: left;
+    }
+
+    .modal-tab-content {
+      display: none;
+      animation: fadeIn 0.3s;
+    }
+
+    .modal-tab-content.active {
+      display: block;
+    }
+
+    .info-section {
+      margin-bottom: 24px;
+    }
+
+    .info-section h3 {
+      font-size: 1.15rem;
+      color: var(--primary);
+      margin-bottom: 12px;
+      border-bottom: 1px solid rgba(0, 207, 255, 0.15);
+      padding-bottom: 6px;
+    }
+
+    .info-section p, .info-section div {
+      color: #c0d5e5;
+      line-height: 1.6;
+      font-size: 0.98rem;
+    }
+
+    .usage-steps {
+      padding-left: 20px;
+      color: #c0d5e5;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .usage-steps li {
+      line-height: 1.5;
+      font-size: 0.95rem;
+    }
+
+    .usage-steps li strong {
+      color: var(--primary);
+    }
+
+    .modal-videos-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .modal-images-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+    }
+
+    .modal-empty-msg {
+      text-align: center;
+      color: #88a;
+      padding: 40px 20px;
+      font-size: 0.95rem;
+      width: 100%;
+    }
   </style>
 </head>
 
@@ -626,7 +893,7 @@
 
       <div class="apps-row">
         <!-- Asixtore Windows -->
-        <div class="app-card">
+        <div class="app-card" data-app="asixtore-win">
           <div class="app-icon">
             <img src="https://github.com/supervic1123/asixtore/blob/main/asixtore.png?raw=true" alt="Asixtore Logo">
           </div>
@@ -636,10 +903,11 @@
           </div>
           <a href="https://github.com/supervic1123/vikenasmart/raw/main/AsixtoreInstaller.exe" class="app-btn"
             download>Descargar Windows</a>
+          <div class="app-card-hint">🔍 Ver detalles y uso</div>
         </div>
 
         <!-- Asixtore MacOS -->
-        <div class="app-card">
+        <div class="app-card" data-app="asixtore-mac">
           <div class="app-icon">
             <img src="https://github.com/supervic1123/asixtore/blob/main/asixtore.png?raw=true" alt="Asixtore Logo">
           </div>
@@ -649,10 +917,11 @@
           </div>
           <a href="https://github.com/supervic1123/vikenasmart/raw/main/Asixtore.dmg" class="app-btn" download>Descargar
             MacOS</a>
+          <div class="app-card-hint">🔍 Ver detalles y uso</div>
         </div>
 
         <!-- Programa 3 -->
-        <div class="app-card">
+        <div class="app-card" data-app="programa-3">
           <div class="app-icon">
             <svg viewBox="0 0 24 24">
               <path
@@ -664,10 +933,11 @@
             <div class="app-desc">Espacio reservado para un futuro programa.</div>
           </div>
           <a href="#" class="app-btn" download>Descargar</a>
+          <div class="app-card-hint">🔍 Ver detalles y uso</div>
         </div>
 
         <!-- Programa 4 -->
-        <div class="app-card">
+        <div class="app-card" data-app="programa-4">
           <div class="app-icon">
             <svg viewBox="0 0 24 24">
               <path
@@ -679,10 +949,11 @@
             <div class="app-desc">Espacio reservado para un futuro programa.</div>
           </div>
           <a href="#" class="app-btn" download>Descargar</a>
+          <div class="app-card-hint">🔍 Ver detalles y uso</div>
         </div>
 
         <!-- Programa 5 -->
-        <div class="app-card">
+        <div class="app-card" data-app="programa-5">
           <div class="app-icon">
             <svg viewBox="0 0 24 24">
               <path
@@ -694,10 +965,11 @@
             <div class="app-desc">Espacio reservado para un futuro programa.</div>
           </div>
           <a href="#" class="app-btn" download>Descargar</a>
+          <div class="app-card-hint">🔍 Ver detalles y uso</div>
         </div>
 
         <!-- Programa 6 -->
-        <div class="app-card">
+        <div class="app-card" data-app="programa-6">
           <div class="app-icon">
             <svg viewBox="0 0 24 24">
               <path
@@ -709,6 +981,7 @@
             <div class="app-desc">Espacio reservado para un futuro programa.</div>
           </div>
           <a href="#" class="app-btn" download>Descargar</a>
+          <div class="app-card-hint">🔍 Ver detalles y uso</div>
         </div>
       </div>
 
@@ -723,7 +996,7 @@
       <div class="section-title">Aplicaciones</div>
       <div class="apps-row">
         <!-- Aplicación 1 -->
-        <div class="app-card">
+        <div class="app-card" data-app="emuvik">
           <div class="app-icon">
             <img src="https://github.com/supervic1123/vikenasmart-limpio/raw/refs/heads/main/emuvik.ico" alt="Emuvik Logo">
           </div>
@@ -732,13 +1005,13 @@
             <div class="app-desc">Emulador android para instalar en pc con windows que permite instalar cualquier apk.
             </div>
           </div>
-          <!-- Cambia la URL en el atributo href para enlazar a la descarga de la aplicación -->
           <a href="https://github.com/supervic1123/vikenasmart-limpio/raw/refs/heads/main/Emuvik.exe" class="app-btn"
             download>Descargar App</a>
+          <div class="app-card-hint">🔍 Ver detalles y uso</div>
         </div>
 
         <!-- Aplicación 2 -->
-        <div class="app-card">
+        <div class="app-card" data-app="keyless">
           <div class="app-icon">
             <img src="https://github.com/supervic1123/vikenasmart-limpio/blob/main/iconok.png?raw=true" alt="Keyless Logo">
           </div>
@@ -747,13 +1020,13 @@
             <div class="app-desc">Aplicación para control de encendido y apagado de vehículos y motocicletas desde el
               celular.</div>
           </div>
-          <!-- Cambia la URL en el atributo href para enlazar a la descarga de la aplicación -->
           <a href="https://github.com/supervic1123/vikenasmart/raw/refs/heads/main/Keyless.apk" class="app-btn"
             download>Descargar App</a>
+          <div class="app-card-hint">🔍 Ver detalles y uso</div>
         </div>
 
         <!-- Aplicación 3 -->
-        <div class="app-card">
+        <div class="app-card" data-app="rifa-millonaria">
           <div class="app-icon">
             <img src="https://github.com/supervic1123/vikenasmart-limpio/blob/main/icono.png?raw=true" alt="Rifa Millonaria Logo">
           </div>
@@ -761,13 +1034,13 @@
             <div class="app-title">Rifa Millonaria</div>
             <div class="app-desc">Aplicación para hacer rifas digitales de 2 y 3 cifras.</div>
           </div>
-          <!-- Cambia la URL en el atributo href para enlazar a la descarga de la aplicación -->
           <a href="https://github.com/supervic1123/vikenasmart/raw/refs/heads/main/RifaMillonaria.apk" class="app-btn"
             download>Descargar App</a>
+          <div class="app-card-hint">🔍 Ver detalles y uso</div>
         </div>
 
         <!-- Aplicación 4 -->
-        <div class="app-card">
+        <div class="app-card" data-app="siempre-fresco">
           <div class="app-icon">
             <img src="https://github.com/supervic1123/vikenasmart-limpio/blob/main/icon.png?raw=true" alt="Siempre Fresco Logo">
           </div>
@@ -776,13 +1049,13 @@
             <div class="app-desc">Aplicación para llevar el control de productos proximos a vencer y conservar los
               alimentos frescos.</div>
           </div>
-          <!-- Cambia la URL en el atributo href para enlazar a la descarga de la aplicación -->
           <a href="https://github.com/supervic1123/vikenasmart/raw/refs/heads/main/Siempre%20Fresco.apk" class="app-btn"
             download>Descargar App</a>
+          <div class="app-card-hint">🔍 Ver detalles y uso</div>
         </div>
 
         <!-- Aplicación 5 -->
-        <div class="app-card">
+        <div class="app-card" data-app="televik">
           <div class="app-icon">
             <img src="https://github.com/supervic1123/vikenasmart-limpio/blob/main/app_icon.png?raw=true" alt="Televik Logo">
           </div>
@@ -790,13 +1063,13 @@
             <div class="app-title">Televik</div>
             <div class="app-desc">Aplicación para instalar en windows y ver canales de tv premium en el pc.</div>
           </div>
-          <!-- Cambia la URL en el atributo href para enlazar a la descarga de la aplicación -->
           <a href="https://github.com/supervic1123/vikenasmart/raw/refs/heads/main/TeleVic_Plus_Setup.exe"
             class="app-btn" download>Descargar App</a>
+          <div class="app-card-hint">🔍 Ver detalles y uso</div>
         </div>
 
         <!-- Aplicación 6 -->
-        <div class="app-card">
+        <div class="app-card" data-app="viktv">
           <div class="app-icon">
             <img src="https://github.com/supervic1123/vikenasmart-limpio/blob/main/app_icon_fg.png?raw=true" alt="VikTV+ Logo">
           </div>
@@ -804,10 +1077,11 @@
             <div class="app-title">VikTV+</div>
             <div class="app-desc">Aplicación android para ver canales de tv premium en vivo gratis.</div>
           </div>
-          <!-- Cambia la URL en el atributo href para enlazar a la descarga de la aplicación -->
           <a href="https://github.com/supervic1123/vikenasmart-limpio/raw/refs/heads/main/VikTV+.apk" class="app-btn"
             download>Descargar App</a>
+          <div class="app-card-hint">🔍 Ver detalles y uso</div>
         </div>
+      </div>
       </div>
     </section>
     <!-- VIDEOS -->
@@ -1087,6 +1361,55 @@
       style="width:18px;vertical-align:middle;margin-right:4px;border-radius:4px;">
     <a href="https://www.instagram.com/vikenasmart/" target="_blank">Instagram</a>
   </footer>
+
+  <!-- MODAL DE INFORMACIÓN Y USO DE APLICACIONES Y PROGRAMAS -->
+  <div class="modal-overlay" id="appModalOverlay">
+    <div class="modal-container">
+      <button class="modal-close" id="appModalClose" title="Cerrar">&times;</button>
+      
+      <div class="modal-header">
+        <div class="modal-logo-wrapper" id="modalLogoContainer">
+          <img id="modalAppLogo" src="" alt="Logo">
+        </div>
+        <div class="modal-header-info">
+          <h2 id="modalAppTitle">Nombre de la App</h2>
+          <p id="modalAppDesc">Descripción de la aplicación</p>
+        </div>
+        <a id="modalAppDownload" href="#" class="btn modal-download-btn" download>Descargar</a>
+      </div>
+
+      <div class="modal-tabs">
+        <button class="modal-tab active" data-tab="info">📄 Información y Uso</button>
+        <button class="modal-tab" data-tab="videos">🎬 Videos <span class="tab-badge" id="modalVideoCount">0</span></button>
+        <button class="modal-tab" data-tab="imagenes">🖼️ Imágenes <span class="tab-badge" id="modalImageCount">0</span></button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Tab 1: Info y Uso -->
+        <div class="modal-tab-content active" id="modalTabInfo">
+          <div class="info-section">
+            <h3>📌 Acerca de este software</h3>
+            <div id="modalAppFullDesc">Cargando información...</div>
+          </div>
+          <div class="info-section">
+            <h3>🚀 Cómo usarlo paso a paso</h3>
+            <ol id="modalAppUsageSteps" class="usage-steps"></ol>
+          </div>
+        </div>
+
+        <!-- Tab 2: Videos -->
+        <div class="modal-tab-content" id="modalTabVideos">
+          <div class="modal-videos-grid" id="modalVideosGrid"></div>
+        </div>
+
+        <!-- Tab 3: Imágenes -->
+        <div class="modal-tab-content" id="modalTabImagenes">
+          <div class="modal-images-grid" id="modalImagesGrid"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
     // Navegación de menú
     const menuLinks = document.querySelectorAll('.navbar-menu a');
@@ -1376,6 +1699,353 @@
             otherAudio.pause();
           }
         });
+      });
+    });
+
+    // DATOS DE DETALLES Y USO DE APLICACIONES Y PROGRAMAS
+    const APP_DATA = {
+      "asixtore-win": {
+        title: "Asixtore (Windows)",
+        logo: "https://github.com/supervic1123/asixtore/blob/main/asixtore.png?raw=true",
+        desc: "Sistema de gestión comercial integral para punto de venta e inventario en Windows.",
+        downloadUrl: "https://github.com/supervic1123/vikenasmart/raw/main/AsixtoreInstaller.exe",
+        downloadText: "Descargar Windows",
+        fullDesc: "Asixtore es un sistema completo de gestión comercial ideal para supermercados, tiendas de abarrotes y comercios. Permite controlar inventarios, productos, proveedores, clientes, créditos y generar reportes detallados.<br><br><b>Credenciales de acceso predeterminadas:</b><br>• Usuario: <code>admin</code><br>• Contraseña: <code>admin</code>",
+        steps: [
+          "Descarga e instala el archivo <code>AsixtoreInstaller.exe</code> en tu computadora con Windows.",
+          "Abre el programa desde el acceso directo creado en tu escritorio.",
+          "Ingresa las credenciales por defecto (Usuario: <b>admin</b>, Contraseña: <b>admin</b>).",
+          "Comienza a registrar tus productos, proveedores e inventarios iniciales.",
+          "Configura tus tickets de venta e impresoras de recibos desde el menú de ajustes.",
+          "Revisa la pestaña de <b>Videos</b> dentro de esta ventana para ver los tutoriales paso a paso."
+        ],
+        videos: [
+          { title: "Agregar Productos", src: "https://github.com/supervic1123/asixtore/raw/refs/heads/main/video1.mp4" },
+          { title: "Agregar proveedores", src: "https://github.com/supervic1123/asixtore/raw/refs/heads/main/video2.mp4" },
+          { title: "Agregar stock", src: "https://github.com/supervic1123/asixtore/raw/refs/heads/main/video3.mp4" },
+          { title: "Hacer ventas", src: "https://github.com/supervic1123/asixtore/raw/refs/heads/main/video4.mp4" },
+          { title: "Cuentas por cobrar", src: "https://github.com/supervic1123/asixtore/raw/refs/heads/main/video5.mp4" },
+          { title: "Informes", src: "https://github.com/supervic1123/asixtore/raw/refs/heads/main/video6.mp4" },
+          { title: "Configurar Backup", src: "https://github.com/supervic1123/asixtore/raw/refs/heads/main/video7.mp4" },
+          { title: "Configurar Credenciales", src: "https://github.com/supervic1123/asixtore/raw/refs/heads/main/video8.mp4" },
+          { title: "Configurar Tiket", src: "https://github.com/supervic1123/asixtore/raw/refs/heads/main/video9.mp4" }
+        ],
+        images: [
+          { title: "Login", src: "https://github.com/supervic1123/asixtore/blob/main/Login.png?raw=true" },
+          { title: "Menu principal", src: "https://github.com/supervic1123/asixtore/blob/main/Menu%20principal.png?raw=true" },
+          { title: "Productos", src: "https://github.com/supervic1123/asixtore/blob/main/Productos.png?raw=true" },
+          { title: "Proveedores", src: "https://github.com/supervic1123/asixtore/blob/main/Proveedores.png?raw=true" },
+          { title: "Stock", src: "https://github.com/supervic1123/asixtore/blob/main/Stock.png?raw=true" },
+          { title: "Ventas", src: "https://github.com/supervic1123/asixtore/blob/main/Ventas.png?raw=true" },
+          { title: "Cuentas por cobrar", src: "https://github.com/supervic1123/asixtore/blob/main/Cuentas%20por%20cobrar.png?raw=true" },
+          { title: "Informes", src: "https://github.com/supervic1123/asixtore/blob/main/Informes.png?raw=true" },
+          { title: "Backup", src: "https://github.com/supervic1123/asixtore/blob/main/Backup.png?raw=true" },
+          { title: "Credenciales", src: "https://github.com/supervic1123/asixtore/blob/main/Credenciales.png?raw=true" },
+          { title: "Tiket", src: "https://github.com/supervic1123/asixtore/blob/main/Tiket.png?raw=true" }
+        ]
+      },
+      "asixtore-mac": {
+        title: "Asixtore (MacOS)",
+        logo: "https://github.com/supervic1123/asixtore/blob/main/asixtore.png?raw=true",
+        desc: "Sistema de gestión comercial integral para punto de venta e inventario en MacOS.",
+        downloadUrl: "https://github.com/supervic1123/vikenasmart/raw/main/Asixtore.dmg",
+        downloadText: "Descargar MacOS",
+        fullDesc: "Asixtore optimizado para sistemas Apple MacOS. Ofrece exactamente las mismas características comerciales avanzadas para gestionar tu negocio.<br><br><b>Credenciales de acceso predeterminadas:</b><br>• Usuario: <code>admin</code><br>• Contraseña: <code>admin</code>",
+        steps: [
+          "Descarga la imagen de disco <code>Asixtore.dmg</code>.",
+          "Haz doble click en el archivo descargado y arrastra Asixtore a tu carpeta de Aplicaciones.",
+          "Ejecuta la aplicación e inicia sesión con Usuario: <b>admin</b> y Contraseña: <b>admin</b>.",
+          "Configura tus módulos de inventario y comienza a facturar."
+        ],
+        videos: [
+          { title: "Agregar Productos", src: "https://github.com/supervic1123/asixtore/raw/refs/heads/main/video1.mp4" },
+          { title: "Hacer ventas", src: "https://github.com/supervic1123/asixtore/raw/refs/heads/main/video4.mp4" }
+        ],
+        images: [
+          { title: "Login", src: "https://github.com/supervic1123/asixtore/blob/main/Login.png?raw=true" },
+          { title: "Menu principal", src: "https://github.com/supervic1123/asixtore/blob/main/Menu%20principal.png?raw=true" },
+          { title: "Productos", src: "https://github.com/supervic1123/asixtore/blob/main/Productos.png?raw=true" }
+        ]
+      },
+      "emuvik": {
+        title: "Emuvik",
+        logo: "https://github.com/supervic1123/vikenasmart-limpio/raw/refs/heads/main/emuvik.ico",
+        desc: "Emulador android para instalar en PC con Windows que permite instalar cualquier archivo APK.",
+        downloadUrl: "https://github.com/supervic1123/vikenasmart-limpio/raw/refs/heads/main/Emuvik.exe",
+        downloadText: "Descargar App",
+        fullDesc: "Emuvik es un emulador de Android ligero y optimizado diseñado para sistemas Windows. Te permite ejecutar aplicaciones de Android (archivos .APK) directamente en tu PC sin complicaciones.",
+        steps: [
+          "Descarga <code>Emuvik.exe</code> haciendo click en el botón de descarga.",
+          "Ejecuta el archivo y completa el asistente de instalación rápida.",
+          "Abre Emuvik desde tu escritorio.",
+          "Arrastra cualquier archivo <b>.apk</b> que desees ejecutar hacia la ventana de Emuvik para instalarlo automáticamente."
+        ],
+        videos: [],
+        images: []
+      },
+      "keyless": {
+        title: "Keyless",
+        logo: "https://github.com/supervic1123/vikenasmart-limpio/blob/main/iconok.png?raw=true",
+        desc: "Aplicación para control de encendido y apagado de vehículos y motocicletas desde el celular.",
+        downloadUrl: "https://github.com/supervic1123/vikenasmart/raw/refs/heads/main/Keyless.apk",
+        downloadText: "Descargar App",
+        fullDesc: "Keyless convierte tu teléfono inteligente en una llave digital inteligente para tu auto o motocicleta. Permite encender, apagar y gestionar el sistema de seguridad y alarmas a distancia con comunicación cifrada.",
+        steps: [
+          "Descarga e instala <code>Keyless.apk</code> en tu teléfono móvil Android.",
+          "Asegúrate de tener instalado el módulo receptor en tu vehículo o motocicleta.",
+          "Activa el Bluetooth de tu teléfono y abre la aplicación Keyless.",
+          "Selecciona tu vehículo para vincular el control remoto.",
+          "Usa los botones en pantalla para encender, apagar o activar la alarma."
+        ],
+        videos: [],
+        images: []
+      },
+      "rifa-millonaria": {
+        title: "Rifa Millonaria",
+        logo: "https://github.com/supervic1123/vikenasmart-limpio/blob/main/icono.png?raw=true",
+        desc: "Aplicación para gestionar y realizar rifas digitales de 2 y 3 cifras de forma organizada.",
+        downloadUrl: "https://github.com/supervic1123/vikenasmart/raw/refs/heads/main/RifaMillonaria.apk",
+        downloadText: "Descargar App",
+        fullDesc: "Rifa Millonaria es la herramienta ideal para organizadores de rifas y sorteos digitales. Permite llevar el control completo de boletos vendidos, abonos, números disponibles y clientes de sorteos de 2 y 3 cifras.",
+        steps: [
+          "Instala <code>RifaMillonaria.apk</code> en tu teléfono móvil.",
+          "Crea una nueva rifa definiendo el nombre del sorteo, precio de la boleta y fecha de juego.",
+          "Asigna números a tus clientes ingresando su nombre y teléfono.",
+          "Registra los abonos y consulta el estado de la rifa en tiempo real."
+        ],
+        videos: [],
+        images: []
+      },
+      "siempre-fresco": {
+        title: "Siempre Fresco",
+        logo: "https://github.com/supervic1123/vikenasmart-limpio/blob/main/icon.png?raw=true",
+        desc: "Aplicación para llevar el control de productos próximos a vencer y conservar alimentos frescos.",
+        downloadUrl: "https://github.com/supervic1123/vikenasmart/raw/refs/heads/main/Siempre%20Fresco.apk",
+        downloadText: "Descargar App",
+        fullDesc: "Siempre Fresco ayuda a hogares y pequeños negocios a evitar el desperdicio de comida. Permite registrar las fechas de vencimiento de alimentos y productos, enviando notificaciones preventivas oportunamente.",
+        steps: [
+          "Descarga e instala <code>Siempre Fresco.apk</code>.",
+          "Agrega un producto ingresando su nombre, categoría y fecha de vencimiento.",
+          "Recibe alertas automáticas en tu teléfono días antes de que los alimentos caduquen.",
+          "Aprovecha al máximo tu despensa y ahorra dinero evitando pérdidas."
+        ],
+        videos: [],
+        images: []
+      },
+      "televik": {
+        title: "Televik",
+        logo: "https://github.com/supervic1123/vikenasmart-limpio/blob/main/app_icon.png?raw=true",
+        desc: "Aplicación para instalar en Windows y ver canales de televisión en vivo en tu PC.",
+        downloadUrl: "https://github.com/supervic1123/vikenasmart/raw/refs/heads/main/TeleVic_Plus_Setup.exe",
+        downloadText: "Descargar App",
+        fullDesc: "Televik te ofrece acceso a canales de televisión en vivo con calidad HD directo desde tu computadora con Windows. Interfaz rápida, liviana y fácil de navegar.",
+        steps: [
+          "Descarga el instalador <code>TeleVic_Plus_Setup.exe</code>.",
+          "Sigue los pasos de instalación en tu PC con Windows.",
+          "Abre la aplicación Televik.",
+          "Selecciona tu canal favorito de la lista y disfruta de la señal en directo."
+        ],
+        videos: [],
+        images: []
+      },
+      "viktv": {
+        title: "VikTV+",
+        logo: "https://github.com/supervic1123/vikenasmart-limpio/blob/main/app_icon_fg.png?raw=true",
+        desc: "Aplicación Android para ver canales de TV premium en vivo totalmente gratis.",
+        downloadUrl: "https://github.com/supervic1123/vikenasmart-limpio/raw/refs/heads/main/VikTV+.apk",
+        downloadText: "Descargar App",
+        fullDesc: "VikTV+ está diseñada para dispositivos Android y Smart TVs (TV Box). Brinda transmisiones estables en vivo de eventos deportivos, películas, series y canales internacionales.",
+        steps: [
+          "Descarga <code>VikTV+.apk</code> en tu teléfono o TV Box Android.",
+          "Si la instalación se bloquea, ve a Ajustes > Seguridad y activa 'Fuentes desconocidas'.",
+          "Abre la aplicación e ingresa a la guía de canales.",
+          "Haz click en el canal deseado para iniciar la reproducción inmediata."
+        ],
+        videos: [],
+        images: []
+      }
+    };
+
+    // LÓGICA DEL MODAL INTERACTIVO
+    const appModalOverlay = document.getElementById('appModalOverlay');
+    const appModalClose = document.getElementById('appModalClose');
+    const modalTabBtns = document.querySelectorAll('.modal-tab');
+    const modalTabContents = document.querySelectorAll('.modal-tab-content');
+
+    function openAppModal(appKey, titleFallback, descFallback, iconSrcFallback, downloadHrefFallback) {
+      const data = APP_DATA[appKey] || {
+        title: titleFallback || 'Información de la Aplicación',
+        logo: iconSrcFallback || '',
+        desc: descFallback || 'Espacio reservado para una futura aplicación o programa.',
+        downloadUrl: downloadHrefFallback || '#',
+        downloadText: 'Descargar',
+        fullDesc: descFallback || 'Información detallada no disponible en este momento.',
+        steps: [
+          'Haz click en el botón de descarga para obtener el archivo.',
+          'Sigue las instrucciones en pantalla para la instalación.',
+          'Disfruta de la aplicación en tu dispositivo.'
+        ],
+        videos: [],
+        images: []
+      };
+
+      // Rellenar cabecera
+      document.getElementById('modalAppTitle').textContent = data.title;
+      document.getElementById('modalAppDesc').textContent = data.desc;
+
+      const logoContainer = document.getElementById('modalLogoContainer');
+      if (data.logo) {
+        logoContainer.innerHTML = `<img id="modalAppLogo" src="${data.logo}" alt="${data.title}">`;
+      } else {
+        logoContainer.innerHTML = `<svg viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg>`;
+      }
+
+      const downloadBtn = document.getElementById('modalAppDownload');
+      downloadBtn.href = data.downloadUrl || '#';
+      downloadBtn.textContent = data.downloadText || 'Descargar';
+
+      // Rellenar info y uso
+      document.getElementById('modalAppFullDesc').innerHTML = data.fullDesc || data.desc;
+      
+      const stepsOl = document.getElementById('modalAppUsageSteps');
+      stepsOl.innerHTML = '';
+      if (data.steps && data.steps.length) {
+        data.steps.forEach(step => {
+          const li = document.createElement('li');
+          li.innerHTML = step;
+          stepsOl.appendChild(li);
+        });
+      } else {
+        stepsOl.innerHTML = '<li>Información de uso no registrada.</li>';
+      }
+
+      // Rellenar Videos
+      const videosGrid = document.getElementById('modalVideosGrid');
+      const videoCountBadge = document.getElementById('modalVideoCount');
+      videosGrid.innerHTML = '';
+      videoCountBadge.textContent = data.videos ? data.videos.length : 0;
+
+      if (data.videos && data.videos.length > 0) {
+        data.videos.forEach(v => {
+          const vBox = document.createElement('div');
+          vBox.className = 'video-container';
+          vBox.innerHTML = `
+            <video controls width="200" style="width: 220px; height: 130px; border-radius: 12px; background: #000;">
+              <source src="${v.src}" type="video/mp4">
+              Tu navegador no soporta video.
+            </video>
+            <div class="video-label" style="font-size:0.85rem; margin-top:6px; color:#00cfff; font-weight:500;">${v.title}</div>
+          `;
+          videosGrid.appendChild(vBox);
+        });
+      } else {
+        videosGrid.innerHTML = '<div class="modal-empty-msg">No hay videos instructivos disponibles para esta aplicación aún.</div>';
+      }
+
+      // Rellenar Imágenes
+      const imagesGrid = document.getElementById('modalImagesGrid');
+      const imageCountBadge = document.getElementById('modalImageCount');
+      imagesGrid.innerHTML = '';
+      imageCountBadge.textContent = data.images ? data.images.length : 0;
+
+      if (data.images && data.images.length > 0) {
+        data.images.forEach(imgData => {
+          const iBox = document.createElement('div');
+          iBox.className = 'img-container';
+          iBox.style.cursor = 'pointer';
+          iBox.innerHTML = `
+            <img src="${imgData.src}" alt="${imgData.title}" style="width:160px; height:100px; object-fit:cover; border-radius:10px;">
+            <div class="img-label" style="font-size:0.8rem; margin-top:4px;">${imgData.title}</div>
+          `;
+          // Al hacer click en una imagen del modal, abrir pantalla completa
+          iBox.addEventListener('click', function() {
+            if (document.querySelector('.img-overlay')) return;
+            const overlay = document.createElement('div');
+            overlay.className = 'img-overlay';
+            overlay.style.zIndex = '3000';
+            const expImg = document.createElement('img');
+            expImg.src = imgData.src;
+            expImg.alt = imgData.title;
+            overlay.appendChild(expImg);
+            document.body.appendChild(overlay);
+            overlay.addEventListener('click', () => overlay.remove());
+          });
+          imagesGrid.appendChild(iBox);
+        });
+      } else {
+        imagesGrid.innerHTML = '<div class="modal-empty-msg">No hay capturas de pantalla disponibles para esta aplicación aún.</div>';
+      }
+
+      // Activar primer tab por defecto
+      switchModalTab('info');
+
+      // Mostrar modal
+      appModalOverlay.classList.add('active');
+    }
+
+    function closeAppModal() {
+      // Pausar cualquier video dentro del modal
+      const modalVideos = document.querySelectorAll('#appModalOverlay video');
+      modalVideos.forEach(v => {
+        try { v.pause(); } catch(e){}
+      });
+
+      appModalOverlay.classList.remove('active');
+    }
+
+    function switchModalTab(tabName) {
+      modalTabBtns.forEach(btn => {
+        if (btn.dataset.tab === tabName) btn.classList.add('active');
+        else btn.classList.remove('active');
+      });
+
+      modalTabContents.forEach(content => {
+        if (content.id === 'modalTab' + tabName.charAt(0).toUpperCase() + tabName.slice(1)) {
+          content.classList.add('active');
+        } else {
+          content.classList.remove('active');
+        }
+      });
+    }
+
+    // Event listeners para pestañas del modal
+    modalTabBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        switchModalTab(this.dataset.tab);
+      });
+    });
+
+    // Event listeners para cerrar modal
+    if (appModalClose) appModalClose.addEventListener('click', closeAppModal);
+    if (appModalOverlay) {
+      appModalOverlay.addEventListener('click', function(e) {
+        if (e.target === appModalOverlay) closeAppModal();
+      });
+    }
+
+    window.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && appModalOverlay && appModalOverlay.classList.contains('active')) {
+        closeAppModal();
+      }
+    });
+
+    // VINCULAR CLICKS EN LAS TARJETAS DE APLICACIONES Y PROGRAMAS
+    document.querySelectorAll('.app-card').forEach(card => {
+      card.addEventListener('click', function(e) {
+        // Si hizo click en el botón de descarga, NO abrir el modal
+        if (e.target.closest('.app-btn')) {
+          return;
+        }
+
+        const appKey = this.dataset.app;
+        const titleFallback = this.querySelector('.app-title') ? this.querySelector('.app-title').textContent : '';
+        const descFallback = this.querySelector('.app-desc') ? this.querySelector('.app-desc').textContent : '';
+        const imgEl = this.querySelector('.app-icon img');
+        const iconSrcFallback = imgEl ? imgEl.src : '';
+        const downloadEl = this.querySelector('.app-btn');
+        const downloadHrefFallback = downloadEl ? downloadEl.href : '#';
+
+        openAppModal(appKey, titleFallback, descFallback, iconSrcFallback, downloadHrefFallback);
       });
     });
   </script>
